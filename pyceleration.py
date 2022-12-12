@@ -34,7 +34,12 @@ def displace_series(series, sessions):
     
     return tmp + series
 
-def _prepare_figure(length, min_value=0.001, max_value=1000, divide_by_ten=False):
+def _prepare_figure(
+        length, 
+        min_value=0.001, 
+        max_value=1000, 
+        divide_by_ten=False
+):
     fig, ax = plt.subplots(1,1)
     ax.set_yscale("log")
     ax.set_xlim(0, length)
@@ -50,7 +55,7 @@ def example():
     ax = _prepare_figure(length)
 
 
-    _add_celeration_angles(ax, length, min_value=min_value, max_value=max_value)
+    _add_celeration_angles(ax, length, min_value, max_value)
 
 
     correct = [1, 1.2, 2.3, 4.1, 5, 4.3, 9]
@@ -80,12 +85,12 @@ def example():
     #xs = np.arange(0,len(custom), step=1)
     #ax.plot(xs, custom)
 
-    _apply_scaling(ax, length, min_value=min_value, max_value=max_value, divide_by_ten=divide_by_ten)
+    _apply_scaling(ax, length, min_value, max_value, divide_by_ten)
 
     plt.show()
 
 
-def _add_celeration_angles(ax, chart_length, min_value=0.001, max_value=1000):
+def _add_celeration_angles(ax, chart_length, min_value, max_value):
 
     upper_y = max_value/100 
     lower_y = min_value
@@ -122,7 +127,7 @@ def _add_celeration_angles(ax, chart_length, min_value=0.001, max_value=1000):
     ax.plot(x2, label="x2", lw=2.5, color=color)
     ax.plot(x3, label="x3", lw=2.5, color=color)
 
-def _apply_scaling(ax, length, min_value=0.001, max_value=1000, divide_by_ten=False):
+def _apply_scaling(ax, length, min_value, max_value, divide_by_ten):
     scale_length = length+10
     scale = _apply_log_range(ax, min_value, max_value)
     _apply_xrange(ax, scale_length, divide_by_ten=divide_by_ten)
@@ -135,15 +140,16 @@ def _apply_scale_ratio(ax, scale):
     y_low, y_high = ax.get_ylim()
     ax.set_aspect(abs((x_right-x_left)/(y_low-y_high))*ratio)
 
-def _apply_xrange(ax, length, step=10, divide_by_ten=True):
-    scale_length = length+10
+def _apply_xrange(ax, length, divide_by_ten):
+    step=10
+    scale_length = length+step
     xrange = np.arange(0, scale_length, step=step)
     ax.set_xticks(xrange)
     labels = xrange
     if divide_by_ten:
-        labels = np.arange(0, scale_length//10, step=1)
+        labels = np.arange(0, scale_length//step, step=1)
     else:
-        labels = np.arange(0, scale_length, step=10)
+        labels = np.arange(0, scale_length, step=step)
 
     ax.set_xticklabels(labels)
 

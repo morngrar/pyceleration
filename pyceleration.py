@@ -82,7 +82,9 @@ def example():
     add_phase(ax, 10, 0.006, "Phase 2")
 
 
-    apply_scaling(ax, length, min_value, max_value, divide_by_ten)
+    apply_scaling(
+        ax, length, min_value, max_value, divide_by_ten, lock_aspect=False
+    )
 
     plt.show()
 
@@ -147,12 +149,16 @@ def add_celeration_angles(ax, chart_length, min_value, max_value):
     ax.plot(x2, label="x2", lw=2.5, color=color)
     ax.plot(x3, label="x3", lw=2.5, color=color)
 
-def apply_scaling(ax, length, min_value, max_value, divide_by_ten):
+def apply_scaling(
+    ax, length, min_value, max_value, divide_by_ten, lock_aspect=True
+):
     scale_length = length+10
     scale = internal.apply_log_range(ax, min_value, max_value)
     internal.apply_xrange(ax, scale_length, divide_by_ten=divide_by_ten)
     plt.grid()
-    internal.apply_scale_ratio(ax, scale)
+
+    if lock_aspect:
+        internal.apply_scale_ratio(ax, scale)
 
 
 

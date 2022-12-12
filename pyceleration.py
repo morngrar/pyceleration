@@ -34,7 +34,7 @@ def displace_series(series, sessions):
     
     return tmp + series
 
-def _prepare_figure(
+def prepare_figure(
         length, 
         min_value=0.001, 
         max_value=1000, 
@@ -46,51 +46,67 @@ def _prepare_figure(
 
     return ax
 
+def add_phase(ax, x, y, text, rotation=76):
+    if x != 0:
+        ax.axvline(x, color="black", ls="--")
+
+    ax.text(2+x, y, text, rotation=rotation)
+
+def plot_correct(ax, data, offset=0):
+    tmp = [np.nan for i in range(offset+1)]
+    tmp += data
+    ax.plot(tmp, "ok", ms=2)
+
+def plot_wrong(ax, data, offset=0):
+    tmp = [np.nan for i in range(offset+1)]
+    tmp += data
+    ax.plot(tmp, "rx")
+
+def plot_threshold(ax, value, length=10, offset=0):
+    data = [value for i in range(length)]
+    tmp = [np.nan for i in range(offset+1)]
+    tmp += data
+    ax.plot(tmp, "b")
+
+def plot_timing(ax, value, length=10, offset=0):
+    data = [value for i in range(length)]
+    tmp = [np.nan for i in range(offset+1)]
+    tmp += data
+    ax.plot(tmp, "g", ls="dashed")
+
 def example():
     length = 140
     min_value = 0.001
     max_value = 1000
     divide_by_ten=False
 
-    ax = _prepare_figure(length)
-
-
-    _add_celeration_angles(ax, length, min_value, max_value)
+    ax = prepare_figure(length)
+    add_celeration_angles(ax, length, min_value, max_value)
 
 
     correct = [1, 1.2, 2.3, 4.1, 5, 4.3, 9]
     wrong = list(reversed(correct))
-    correct.insert(0, np.nan)
-    wrong.insert(0, np.nan)
-    tmp = nanpad(correct)
-    c_data = np.asarray(tmp)
-    w_data = np.asarray(nanpad(wrong))
-    threshold = generate_bar(10)
 
-    t2 = displace_series(threshold, 2)
 
-    timing = generate_bar(0.5)
+    plot_correct(ax, correct)
+    plot_wrong(ax, wrong)
+    plot_threshold(ax,10)
+    plot_timing(ax, 0.5)
 
-    ax.plot(c_data, "ok", ms=2)
-    ax.plot(w_data, "rx")
-    ax.plot(threshold, "b")
-    ax.plot(timing, "g", ls="dashed")
-    ax.plot(t2, "b")
+    plot_threshold(ax, 10, offset=2*10)
 
-    ax.axvline(10)
-    ax.text(2,0.006, "Phase 1", rotation=76)
-    ax.text(2+10,0.006, "Phase 2", rotation=76)
+    plot_correct(ax, correct, 2*10)
 
-    #custom = [*n,np.nan, 3, 3.5, 4, 7, 3.2, 8, 6.5]
-    #xs = np.arange(0,len(custom), step=1)
-    #ax.plot(xs, custom)
+    add_phase(ax, 0, 0.006, "Phase 1")
+    add_phase(ax, 10, 0.006, "Phase 2")
 
-    _apply_scaling(ax, length, min_value, max_value, divide_by_ten)
+
+    apply_scaling(ax, length, min_value, max_value, divide_by_ten)
 
     plt.show()
 
 
-def _add_celeration_angles(ax, chart_length, min_value, max_value):
+def add_celeration_angles(ax, chart_length, min_value, max_value):
 
     upper_y = max_value/100 
     lower_y = min_value
@@ -127,7 +143,7 @@ def _add_celeration_angles(ax, chart_length, min_value, max_value):
     ax.plot(x2, label="x2", lw=2.5, color=color)
     ax.plot(x3, label="x3", lw=2.5, color=color)
 
-def _apply_scaling(ax, length, min_value, max_value, divide_by_ten):
+def apply_scaling(ax, length, min_value, max_value, divide_by_ten):
     scale_length = length+10
     scale = _apply_log_range(ax, min_value, max_value)
     _apply_xrange(ax, scale_length, divide_by_ten=divide_by_ten)

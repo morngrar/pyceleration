@@ -1,0 +1,66 @@
+{
+    "observations": [
+        {
+            "offset": 0,
+            "timing": 0.5,
+            "correct": 3,
+            "wrong": 5,
+            "threshold": 35
+        },
+        {
+            "offset": 1,
+            "timing": 0.5,
+            "correct": 6,
+            "wrong": 3,
+            "threshold": 35
+        },
+        {
+            "offset": 2,
+            "timing": 0.5,
+            "correct": 7,
+            "wrong": 5,
+            "threshold": 35
+        },
+        {
+            "offset": 3,
+            "timing": 0.5,
+            "correct": 8,
+            "wrong": 2,
+            "threshold": 35
+        },
+        {
+            "offset": 4,
+            "timing": 0.5,
+            "correct": 6,
+            "wrong": 1,
+            "threshold": 35
+        }
+    ],
+    "sessions": [
+        {
+            "offset": 30,
+            "timing": 0.5,
+            "threshold": 70,
+            "correct": [
+                2, 2, 3, 4, 2, 6, 9, 12, 10
+            ],
+            "wrong": [
+                7, 4, 3, 2, 2, 2, 2, 1, 0
+            ]
+        }
+    ],
+    "phases": [
+        {
+            "text": "Phase 1",
+            "x": 0
+        },
+        {
+            "text": "Phase 2",
+            "x": 10
+        },
+        {
+            "text": "Phase 3",
+            "x": 40
+        }
+    ]
+}

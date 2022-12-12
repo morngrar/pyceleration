@@ -89,6 +89,23 @@ def example():
     plt.show()
 
 
+class CelerationChart:
+    def __init__(self, data, length, min_value, max_value):
+        self.data = data 
+        self.length = length
+        self.min_value = min_value
+        self.max_value = max_value
+        self.lock_aspect = True
+        self.divide_by_ten = False
+        self.show_celeration_angles = True
+        self.show_wrong = True
+        self.show_timings = True
+        self.show_phases = True
+
+    def plot(self):
+        pass
+
+
 def add_celeration_angles(ax, chart_length, min_value, max_value):
 
     upper_y = max_value/100 

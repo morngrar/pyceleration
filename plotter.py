@@ -19,6 +19,11 @@ YEARLY = MONTHLY+1
 PERIOD = WEEKLY
 GOAL = 70
 
+def permin(count, duration):
+    """Takes a count and a duration in seconds. Returns count per minute"""
+    mins = duration/60
+    return count / mins
+
 def add_phase(ax, x, y, text, rotation=76):
     if x != 0:
         ax.axvline(x, color="grey", ls="--")
@@ -88,16 +93,12 @@ def main():
 
     # plot values
 
-    def permin(count, duration):
-        """Takes a count and a duration in seconds. Returns count per minute"""
-        mins = duration/60
-        return count / mins
 
     print("plotting correct")
     xs = [get_date(row[0]) for row in rows]
-    correct = [permin(int(row[2]), int(row[5])) for row in rows]
-    wrong = [permin(int(row[3]), int(row[5])) for row in rows]
-    threshold = [int(row[4]) for row in rows]
+    correct = [permin(float(row[2]), float(row[5])) for row in rows]
+    wrong = [permin(float(row[3]), float(row[5])) for row in rows]
+    threshold = [float(row[4]) for row in rows]
     duration = [float(row[5])/60 for row in rows] # duration in minutes
     ax.plot(xs, correct, "o", ms=3, color="blue", label="Correct")
     ax.plot(xs, wrong, "x", ms=3, color="red", label="Wrong")

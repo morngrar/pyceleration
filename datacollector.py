@@ -3,10 +3,15 @@
 import csv
 import datetime
 import os
+import sys
 
 import plotter
 
-FILENAME = "collection.csv"
+if len(sys.argv) < 2:
+    print("need to pass project!")
+    sys.exit(1)
+
+FILENAME = f"{sys.argv[1]}.csv"
 
 duration = int(input("Session duration in seconds: "))
 threshold = plotter.permin(int(input("Goal: ")), duration)

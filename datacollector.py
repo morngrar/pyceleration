@@ -8,10 +8,10 @@ import sys
 import plotter
 
 if len(sys.argv) < 2:
-    print("need to pass project!")
+    print("need to pass project csv file!")
     sys.exit(1)
 
-FILENAME = f"{sys.argv[1]}.csv"
+FILENAME = f"{sys.argv[1]}"
 
 duration = int(input("Session duration in seconds: "))
 threshold = plotter.permin(int(input("Goal: ")), duration)
